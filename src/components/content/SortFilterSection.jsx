@@ -1,4 +1,4 @@
-import { filtersRadioGroupOptions } from "@/core/constants/filtersRadioGroupOptions";
+import { statusOptions } from "@/core/constants/statusOptions";
 import { sortOptions } from "@/core/constants/sortOptions";
 import { useDebounce } from "@/core/hooks/useDebounce";
 import { Checkbox, Input, Select } from "antd";
@@ -14,10 +14,10 @@ const SortFilterSection = ({
   }, 500);
 
   return (
-    <div className=" w-fit flex gap-6 max-md:w-full max-md:justify-between max-md:flex-wrap-reverse">
+    <div className=" justify-self-center w-fit flex gap-6 max-lg:w-full max-lg:justify-between max-xl:flex-wrap-reverse ">
       <Select
         showSearch
-        style={{ width: "100%", minWidth: "250px" }}
+        style={{ width: "calc(50% - 12px)", minWidth: "250px" }}
         size="large"
         placeholder="Search to Select"
         optionFilterProp="label"
@@ -28,17 +28,23 @@ const SortFilterSection = ({
       />
       <Input
         placeholder="Search ..."
-        style={{ minWidth: "250px" }}
+        style={{ width: "calc(50% - 12px)", minWidth: "250px" }}
         onChange={debouncedOnChangeHandler}
         size="large"
       />
-      <div className="flex flex-nowrap max-[30rem]:flex-wrap gap-4 flex-row items-center ">
+      <div className="flex gap-4 items-center max-[30rem]:items-start max-[30rem]:flex-col max-[30rem]:justify-center ">
         <span className="text-nowrap"> filter by status:</span>
-        <Checkbox.Group
-          options={filtersRadioGroupOptions}
-          onChange={handleFilterByStatus}
-          style={{ display: "flex", flexWrap: "nowrap", alignItems: "center" }}
-        />
+        <div>
+          <Checkbox.Group
+            options={statusOptions}
+            onChange={handleFilterByStatus}
+            style={{
+              display: "flex",
+              flexWrap: "nowrap",
+              alignItems: "center",
+            }}
+          />
+        </div>
       </div>
     </div>
   );
