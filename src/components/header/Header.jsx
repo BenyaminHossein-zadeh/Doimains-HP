@@ -4,8 +4,7 @@ const Header = () => {
   return (
 
     <header className='flex justify-between'>
-        <h1>Domains</h1>
-        <span>dark?lighjt</span>
+        <h1 className='text-4xl font-bold'>Domains</h1>
     </header>
 
 )

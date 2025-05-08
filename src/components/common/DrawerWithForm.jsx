@@ -49,9 +49,6 @@ const DrawerWithForm = ({
         domain: defaultValue.domain,
         status: defaultValue.status,
         isActive: defaultValue.isActive,
-        // createdDate: defaultValue.createdDate
-        //   ? defaultValue.createdDate
-        //   : undefined,
       });
     } else {
       form.resetFields();
@@ -61,7 +58,7 @@ const DrawerWithForm = ({
   return (
     <Drawer
       title={title}
-      width={720}
+      width={370}
       onClose={onClose}
       open={open}
       placement="left"
@@ -76,10 +73,9 @@ const DrawerWithForm = ({
         form={form}
         name="validateOnly"
         onFinish={onSubmit}
-        // initialValues={defaultValue}
       >
         <Row gutter={16}>
-          <Col span={12}>
+          <Col span={24}>
             <Form.Item
               name="domain"
               label="Domain"
@@ -96,11 +92,12 @@ const DrawerWithForm = ({
                 style={{ width: "100%" }}
                 placeholder="Please enter url"
                 inputMode="url"
-                // defaultValue={defaultValue?.domain}
               />
             </Form.Item>
           </Col>
-          <Col span={12}>
+        </Row>
+        <Row gutter={16} >
+          <Col span={24}>
             <Form.Item
               name="createdDate"
               label="DateTime"
@@ -109,57 +106,49 @@ const DrawerWithForm = ({
                   required: false,
                   message: "Please choose the dateTime",
                   type: "date",
-                  //   warningOnly: true,
                 },
               ]}
             >
               <DatePicker
                 style={{ width: "100%" }}
                 getPopupContainer={(trigger) => trigger.parentElement}
-                // defaultValue={defaultValue?.createdDate}
               />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
-          <Col span={12}>
+          <Col span={24}>
             <Form.Item
               name="status"
               label="Status"
               rules={[
                 {
-                  required:  true,
+                  required: true,
                   message: "Please select status",
                 },
               ]}
             >
-              <Select
-                placeholder="Please select status"
-                // defaultValue={defaultValue?.status}
-                allowClear
-              >
+              <Select placeholder="Please select status" allowClear>
                 <Option value="verified">verified</Option>
                 <Option value="pending">pending</Option>
                 <Option value="rejected">rejected</Option>
               </Select>
             </Form.Item>
           </Col>
-          <Col span={12}>
+        </Row>
+        <Row gutter={16}>
+          <Col span={24}>
             <Form.Item
               name="isActive"
               label="Activity"
               rules={[
                 {
-                  required:  true,
+                  required: true,
                   message: "Please choose the activity",
                 },
               ]}
             >
-              <Select
-                placeholder="Please choose the activity"
-                // defaultValue={defaultValue?.isActive}
-                allowClear
-              >
+              <Select placeholder="Please choose the activity" allowClear>
                 <Option value={true}>Active</Option>
                 <Option value={false}>Not Active</Option>
               </Select>
@@ -169,7 +158,7 @@ const DrawerWithForm = ({
         <Row gutter={16}>
           <Col span={24}>
             <Form.Item label={null}>
-              <SubmitButton loading={loading} form={form}>
+              <SubmitButton  loading={loading} form={form}>
                 Submit
               </SubmitButton>
             </Form.Item>
