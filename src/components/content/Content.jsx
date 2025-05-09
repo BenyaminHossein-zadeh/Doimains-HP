@@ -5,16 +5,12 @@ import { useGetDomainsQuery } from "@/core/services/state/domains/domainsApiSlic
 import DomainsTable from "../common/DomainsTable";
 
 const Content = () => {
-  // const [id, setId] = useState(undefined);
-
   const { data: domains, isLoading, refetch } = useGetDomainsQuery({});
-  // const { data: postDetail } = useGetDomainQuery({ id: id });
 
   const [filteredDomains, setFilteredDomains] = useState(undefined);
   const [selectedStatuses, setSelectedStatuses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortType, setSortType] = useState(null);
-  console.log(selectedStatuses);
 
   const handleFiltersAndSort = useCallback(() => {
     if (!domains) return;
@@ -84,8 +80,6 @@ const Content = () => {
       handleFiltersAndSort();
     }
   }, [domains, searchTerm, sortType, selectedStatuses, handleFiltersAndSort]);
-
-  console.log(filteredDomains);
 
   return (
     <main className="flex flex-col gap-8">

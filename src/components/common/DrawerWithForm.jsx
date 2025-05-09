@@ -96,7 +96,7 @@ const DrawerWithForm = ({
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={16} >
+        <Row gutter={16}>
           <Col span={24}>
             <Form.Item
               name="createdDate"
@@ -158,7 +158,7 @@ const DrawerWithForm = ({
         <Row gutter={16}>
           <Col span={24}>
             <Form.Item label={null}>
-              <SubmitButton  loading={loading} form={form}>
+              <SubmitButton loading={loading} form={form}>
                 Submit
               </SubmitButton>
             </Form.Item>

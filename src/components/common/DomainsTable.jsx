@@ -14,8 +14,9 @@ import {
   Switch,
   Table,
 } from "antd";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import DrawerWithForm from "./DrawerWithForm";
+import { formatUrl } from "@/core/utils/formatUrl";
 
 const DomainsTable = ({ data, refetch, isLoading }) => {
   const [selectedRecordId, setSelectedRecordId] = useState(undefined);
@@ -70,15 +71,76 @@ const DomainsTable = ({ data, refetch, isLoading }) => {
           return (
             <>
               <div className="flex gap-2 items-center group py-4">
-                <span
-                  key={`domain-${record.id}`}
-                  className="truncate text-blue-600"
+                <Popover
+                  content={
+                    <div style={{ maxWidth: "500px" }}>
+                      <div className="preview-card p-4 bg-white rounded-md border border-gray-200">
+                        <h4 className="text-base font-medium mb-2">
+                          Domain Preview
+                        </h4>
+                        <div
+                          style={{
+                            width: "450px",
+                            height: "300px",
+                            position: "relative",
+                            overflow: "hidden",
+                            borderRadius: "4px",
+                            border: "1px solid #f0f0f0",
+                          }}
+                        >
+                          <iframe
+                            src={formatUrl(record.domain)}
+                            title={`Preview of ${record.domain}`}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              border: "none",
+                              transform: "scale(0.9)",
+                              transformOrigin: "0 0",
+                            }}
+                            sandbox="allow-same-origin allow-scripts"
+                            loading="lazy"
+                            onError={(e) => {
+                              e.target.style.display = "none";
+                              e.target.parentElement.innerHTML = `
+                        <div class="text-gray-500 p-4">
+                          <p>Preview not available</p>
+                          <a href="${record.domain}" 
+                             target="_blank" 
+                             rel="noopener noreferrer"
+                             class="text-blue-600 hover:underline"
+                          >
+                            Open in new tab
+                          </a>
+                        </div>
+                      `;
+                            }}
+                          />
+                        </div>
+                        <a
+                          href={record.domain}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-2 inline-block text-blue-600 hover:underline"
+                        >
+                          Visit website
+                        </a>
+                      </div>
+                    </div>
+                  }
+                  placement="right"
+                  trigger="hover"
                 >
-                  {record.domain}
-                </span>
+                  <span
+                    key={`domain-${record.id}`}
+                    className="truncate text-blue-600 cursor-pointer"
+                  >
+                    {record.domain}
+                  </span>
+                </Popover>
 
                 <Button type="text" onClick={() => showEditDrawer(record)}>
-                  <EditIcon className="hidden group-hover:block opacity-60 cursor-pointer" />
+                  <EditIcon className=" opacity-60 cursor-pointer" />
                 </Button>
               </div>
             </>
@@ -124,12 +186,10 @@ const DomainsTable = ({ data, refetch, isLoading }) => {
         key: "action",
         render: (_, record) => {
           const confirm = (e) => {
-            console.log(e);
             message.success("Click on Yes");
             handleDelete(record);
           };
           const cancel = (e) => {
-            console.log(e);
             message.error("Click on No");
           };
           return (
@@ -157,7 +217,6 @@ const DomainsTable = ({ data, refetch, isLoading }) => {
     ],
     [handleUpdate, handleDelete, isUpdateLoading, isDeleteLoading]
   );
- 
 
   return (
     <>
@@ -165,7 +224,6 @@ const DomainsTable = ({ data, refetch, isLoading }) => {
         columns={columns}
         dataSource={data}
         rowKey={(record) => `row-${record.id}`}
-        // pagination={{ pageSize: 10 }}
         scroll={true}
         size="small"
         loading={isLoading}
